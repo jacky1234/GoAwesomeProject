@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"errors"
 	"unsafe"
+	"math"
 )
 
 type X int
@@ -18,7 +19,8 @@ type manager struct {
 	title string
 }
 
-type Printer interface {		//接口
+type Printer interface {
+	//接口
 	Print()
 }
 
@@ -28,7 +30,7 @@ func (u user) Print() {
 }
 
 func main() {
-	//slice_test()
+	slice_test()
 	//method_test()
 	//method2_test()
 	//method_multiple_return()
@@ -36,19 +38,51 @@ func main() {
 	//const_test1()
 	//enum_iota_test1()
 	//enum_iota_test2()
+	//enum_iota_test3()
 	//puzzle()
 	//for_range()
 	//for_test()
 	//switch_test()
 	//defer_test()
+	//delay_toConfirm1()
+
+	//var a = struct {
+	//	x int
+	//}{100}
+	//
+	//println(a)
+
+	println(math.MinInt64)
 }
 
-func defer_test() {
-	defer println("dispose...")
-	c, e := div(10, 0)
-	fmt.Println(10 / 0)
-	fmt.Println(c, e)
+func delay_toConfirm1() {
+	a := 1 << 2
+	a |= 1 << 6
+	fmt.Printf("0b%d", a)
 }
+
+func enum_iota_test3() {
+	println(Sunday)
+	println(Monday)
+	println(Tuesday)
+}
+
+const (
+	Sunday = iota
+	Monday
+	Tuesday
+	Wednesday
+	Thursday
+	Friday
+	Saturday
+)
+
+//func defer_test() {
+//	defer println("dispose...")
+//	c, e := div(10, 0)
+//	fmt.Println(10 / 0)
+//	fmt.Println(c, e)
+//}
 
 func method_multiple_return() {
 	a, b := 10, 0
@@ -163,11 +197,26 @@ func (x *X) inc() {
 }
 
 func slice_test() {
-	x := make([]int, 0, 5) //切片
+	x := make([]int, 0) //切片
 
 	for i := 0; i < 8; i++ {
-		x = append(x, i)
+		x = append(x, i, 100, 101)
 	}
 
 	fmt.Println(x)
+
+	//var s1 []int
+	//s2 := []int{}
+	s5 := []int{1, 2, 3}
+	s5 = append(s5, 4);
+	fmt.Println(s5)
+	fmt.Println(s5[2])
+
+	array := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+	s1 := array[2:5]
+	fmt.Println(s1)
+
+	array[1] = 100
+	fmt.Println(array)
+
 }
