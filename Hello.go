@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"errors"
 	"unsafe"
+	"math"
+	"strconv"
 )
 
 type X int
@@ -18,7 +20,8 @@ type manager struct {
 	title string
 }
 
-type Printer interface {		//接口
+type Printer interface {
+	//接口
 	Print()
 }
 
@@ -36,17 +39,39 @@ func main() {
 	//const_test1()
 	//enum_iota_test1()
 	//enum_iota_test2()
-	//puzzle()
+	//math_test()
+	//number_convert()
+	base_compare()
+
 	//for_range()
 	//for_test()
 	//switch_test()
 	//defer_test()
 }
 
+func base_compare() {
+	//? max_float 表示的范围不是很大吗？
+	var a float32 = 1.1234567899
+	var b float32 = 1.12345678
+	var c float32 = 1.123456781
+	println(a, b, c)
+	println(a == b, a == c)
+	fmt.Printf("%v %v, %v\n", a, b, c)
+}
+
+func number_convert() {
+	a, _ := strconv.ParseInt("1100100", 2, 32)
+	b, _ := strconv.ParseInt("0144", 8, 32)
+	c, _ := strconv.ParseInt("64", 16, 32)
+	println(a, b, c)
+	println("0b" + strconv.FormatInt(a, 2))
+	println("0" + strconv.FormatInt(a, 8))
+	println("0x" + strconv.FormatInt(a, 16))
+}
+
 func defer_test() {
 	defer println("dispose...")
 	c, e := div(10, 0)
-	fmt.Println(10 / 0)
 	fmt.Println(c, e)
 }
 
@@ -89,9 +114,13 @@ func for_range() {
 	}
 }
 
-func puzzle() {
+func math_test() {
 	a, b, c := 100, 0144, 0x64
 	fmt.Println(a, b, c)
+
+	fmt.Printf("0b%b, %#o, %#x\n", a, a, a)
+	fmt.Println(math.MinInt8, math.MaxInt8)
+
 }
 
 func enum_iota_test2() {
