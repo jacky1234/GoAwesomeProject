@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
-	"errors"
 	"unsafe"
 	"math"
 	"strconv"
+	"errors"
 )
 
 type X int
@@ -30,8 +30,30 @@ func (u user) Print() {
 	fmt.Print(sprint)
 }
 
+func forSliceRange(s []int) { //切片做函数参数
+	s[0] = -1
+	for i, v := range s {
+		fmt.Printf("s[%d]=%d, ", i, v)
+		//s[0]=-1, s[1]=1, s[2]=2, s[3]=3, s[4]=4, s[5]=5, s[6]=6, s[7]=7, s[8]=8, s[9]=9,
+	}
+	fmt.Println("\n")
+}
+
 func main() {
 	//slice_test()
+	data := [...]int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+	s1 := data[8:] //{8, 9}
+	s2 := data[:5] //{0, 1, 2, 3, 4}
+	copy(s2, s1)   // dst:s2, src:s1
+
+	for i, n := range data {
+		fmt.Printf("key = %d,value = %d\n", i, n)
+	}
+
+	fmt.Println(s2)   //[8 9 2 3 4]
+	fmt.Println(data) //[8 9 2 3 4 5 6 7 8 9]
+	//slice_method()
+
 	//method_test()
 	//method2_test()
 	//method_multiple_return()
@@ -41,12 +63,26 @@ func main() {
 	//enum_iota_test2()
 	//math_test()
 	//number_convert()
-	base_compare()
-
+	//enum_iota_test3()
+	//puzzle()
 	//for_range()
 	//for_test()
 	//switch_test()
 	//defer_test()
+	//delay_toConfirm1()
+
+	//var a = struct {
+	//	x int
+	//}{100}
+	//
+	//println(a)
+
+	println(math.MinInt64)
+}
+
+func slice_method() {
+	slice := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+	forSliceRange(slice)
 }
 
 func base_compare() {
@@ -69,11 +105,35 @@ func number_convert() {
 	println("0x" + strconv.FormatInt(a, 16))
 }
 
-func defer_test() {
-	defer println("dispose...")
-	c, e := div(10, 0)
-	fmt.Println(c, e)
+func delay_toConfirm1() {
+	a := 1 << 2
+	a |= 1 << 6
+	fmt.Printf("0b%d", a)
 }
+
+func
+enum_iota_test3() {
+	println(Sunday)
+	println(Monday)
+	println(Tuesday)
+}
+
+const (
+	Sunday = iota
+	Monday
+	Tuesday
+	Wednesday
+	Thursday
+	Friday
+	Saturday
+)
+
+//func defer_test() {
+//	defer println("dispose...")
+//	c, e := div(10, 0)
+//	fmt.Println(10 / 0)
+//	fmt.Println(c, e)
+//}
 
 func method_multiple_return() {
 	a, b := 10, 0
@@ -89,7 +149,8 @@ func div(a, b int) (int, error) {
 	return a / b, nil
 }
 
-func switch_test() {
+func
+switch_test() {
 	x := 100
 	switch {
 	case x > 10:
@@ -101,20 +162,23 @@ func switch_test() {
 	}
 }
 
-func for_test() {
+func
+for_test() {
 	for i := 0; i < 4; i++ {
 		println(i)
 	}
 }
 
-func for_range() {
+func
+for_range() {
 	x := []int{100, 101, 102}
 	for i, n := range x {
 		println(i, ":", n)
 	}
 }
 
-func math_test() {
+func
+math_test() {
 	a, b, c := 100, 0144, 0x64
 	fmt.Println(a, b, c)
 
@@ -123,7 +187,8 @@ func math_test() {
 
 }
 
-func enum_iota_test2() {
+func
+enum_iota_test2() {
 	test_color(red)
 	test_color(1<<8 - 1)
 }
@@ -187,16 +252,35 @@ func method_test() {
 	x.inc()
 	println(x)
 }
+
 func (x *X) inc() {
 	*x++
 }
 
 func slice_test() {
-	x := make([]int, 0, 5) //切片
-
-	for i := 0; i < 8; i++ {
-		x = append(x, i)
+	x := make([]int, 0) //切片
+	c := cap(x)
+	for i := 0; i < 25; i++ {
+		x = append(x, i, i*10)
+		if n := cap(x); n > c {
+			fmt.Printf("cap: %d -> %d\n", c, n)
+			c = n
+		}
 	}
 
 	fmt.Println(x)
+
+	//var s1 []int
+	//s2 := []int{}
+	s5 := []int{1, 2, 3}
+	s5 = append(s5, 4);
+	fmt.Println(s5)
+	fmt.Println(s5[2])
+
+	array := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+	s1 := array[2:5]
+	fmt.Println(s1)
+
+	array[1] = 100
+	fmt.Println(array)
 }
