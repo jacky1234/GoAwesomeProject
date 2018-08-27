@@ -29,8 +29,30 @@ func (u user) Print() {
 	fmt.Print(sprint)
 }
 
+func forSliceRange(s []int) { //切片做函数参数
+	s[0] = -1
+	for i, v := range s {
+		fmt.Printf("s[%d]=%d, ", i, v)
+		//s[0]=-1, s[1]=1, s[2]=2, s[3]=3, s[4]=4, s[5]=5, s[6]=6, s[7]=7, s[8]=8, s[9]=9,
+	}
+	fmt.Println("\n")
+}
+
 func main() {
-	slice_test()
+	//slice_test()
+	data := [...]int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+	s1 := data[8:] //{8, 9}
+	s2 := data[:5] //{0, 1, 2, 3, 4}
+	copy(s2, s1)   // dst:s2, src:s1
+
+	for i, n := range data {
+		fmt.Printf("key = %d,value = %d\n", i, n)
+	}
+
+	fmt.Println(s2)   //[8 9 2 3 4]
+	fmt.Println(data) //[8 9 2 3 4 5 6 7 8 9]
+	//slice_method()
+
 	//method_test()
 	//method2_test()
 	//method_multiple_return()
@@ -53,6 +75,11 @@ func main() {
 	//println(a)
 
 	println(math.MinInt64)
+}
+
+func slice_method() {
+	slice := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+	forSliceRange(slice)
 }
 
 func delay_toConfirm1() {
@@ -198,9 +225,13 @@ func (x *X) inc() {
 
 func slice_test() {
 	x := make([]int, 0) //切片
-
-	for i := 0; i < 8; i++ {
-		x = append(x, i, 100, 101)
+	c := cap(x)
+	for i := 0; i < 25; i++ {
+		x = append(x, i, i*10)
+		if n := cap(x); n > c {
+			fmt.Printf("cap: %d -> %d\n", c, n)
+			c = n
+		}
 	}
 
 	fmt.Println(x)
