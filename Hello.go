@@ -2,6 +2,10 @@ package main
 
 import (
 	"fmt"
+	"unsafe"
+	"math"
+	"strconv"
+	"errors"
 )
 
 type X int
@@ -35,15 +39,6 @@ func forSliceRange(s []int) { //切片做函数参数
 	fmt.Println("\n")
 }
 
-
-/**
-1. 不支持overload
-2. 函数属于第一类对象
- */
-func methodBegin(n int){
-
-}
-
 func main() {
 	//slice_test()
 	//slice_copy()
@@ -72,7 +67,8 @@ func main() {
 	//
 	//println(a)
 
-	println(math.MinInt64)
+	var a *int = test()
+	println(a, *a)
 }
 
 func slice_copy() {
