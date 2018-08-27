@@ -2,10 +2,6 @@ package main
 
 import (
 	"fmt"
-	"unsafe"
-	"math"
-	"strconv"
-	"errors"
 )
 
 type X int
@@ -39,19 +35,18 @@ func forSliceRange(s []int) { //切片做函数参数
 	fmt.Println("\n")
 }
 
+
+/**
+1. 不支持overload
+2. 函数属于第一类对象
+ */
+func methodBegin(n int){
+
+}
+
 func main() {
 	//slice_test()
-	data := [...]int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
-	s1 := data[8:] //{8, 9}
-	s2 := data[:5] //{0, 1, 2, 3, 4}
-	copy(s2, s1)   // dst:s2, src:s1
-
-	for i, n := range data {
-		fmt.Printf("key = %d,value = %d\n", i, n)
-	}
-
-	fmt.Println(s2)   //[8 9 2 3 4]
-	fmt.Println(data) //[8 9 2 3 4 5 6 7 8 9]
+	//slice_copy()
 	//slice_method()
 
 	//method_test()
@@ -78,6 +73,25 @@ func main() {
 	//println(a)
 
 	println(math.MinInt64)
+}
+
+func slice_copy() {
+	data := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+	s1 := data[8:]
+	//{8, 9}
+	s2 := data[:5]
+	//{0, 1, 2, 3, 4}
+	copy(s2, s1)
+	// dst:s2, src:s1
+	fmt.Println(s1)
+	fmt.Println(s2)
+	//for i, n := range data {
+	//	fmt.Printf("key = %d,value = %d\n", i, n)
+	//}
+	fmt.Println(s2)
+	//[8 9 2 3 4]
+	fmt.Println(data)
+	//[8 9 2 3 4 5 6 7 8 9]
 }
 
 func slice_method() {
