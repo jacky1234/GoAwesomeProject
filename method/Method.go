@@ -28,7 +28,7 @@ func defer_invoke() {
 	x, y := 1, 2
 	defer func(a int) {
 		fmt.Println("defer x,y=", a, y) //y为闭包引用
-	}(x) //注册时，赋值调用参数
+	}(x) //注册时，复制调用参数
 
 	x += 100
 	y += 200
