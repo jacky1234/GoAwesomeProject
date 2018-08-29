@@ -10,7 +10,82 @@ func main() {
 	//add_method_for_object()
 	//unFixed_param()
 	//anonymous_method()
-	closure_test()
+	//closure_test()
+	//class_inherit_test()
+
+	base := Base{}
+	t1 := &TypeOne{1,base}
+	t2 := &TypeTwo{2,base}
+	t3 := &TypeThree{3,base}
+	//https://blog.csdn.net/wangshubo1989/article/details/73287204
+}
+
+type Base struct {
+
+}
+
+type Baser interface {
+	Get() float32
+}
+
+type TypeOne struct {
+	value float32
+	Base
+}
+
+type TypeTwo struct {
+	value float32
+	Base
+}
+
+type TypeThree struct {
+	value float32
+	Base
+}
+
+func (t *TypeOne) Get() float32 {
+	return t.value
+}
+
+func (t *TypeTwo) Get() float32 {
+	return t.value * t.value
+}
+
+func (t *TypeThree) Get() float32 {
+	return t.value + t.value
+}
+
+func class_inherit_test() {
+	mark := Student{Human{"Jack", 12, "18516606250"}, "nantong university"}
+	sam := Employee{Human{"Alice", 30, "983094012"}, "Xiaoxin Company"}
+	mark.SayHi()
+	sam.SayHi()
+}
+
+type Human struct {
+	name  string
+	age   int
+	phone string
+}
+
+type Student struct {
+	Human
+	school string
+}
+
+type Employee struct {
+	Human
+	company string
+}
+
+func (h *Human) SayHi() {
+	fmt.Printf("Hi, I am %s you can call me on %s\n", h.name, h.phone)
+}
+
+//重写
+func (e *Employee) SayHi(){
+	fmt.Printf("Hi, I am %s, I work at %s. Call me on %s\n", e.name,
+		e.company, e.phone)
 }
 
 func closure_test() {
@@ -35,6 +110,7 @@ func anonymous_method() {
 		return x + y
 	}
 	println(add(1, 2))
+	println(add(10, 20))
 
 	//作为参数
 	as_param(func() {
@@ -59,7 +135,7 @@ func as_param(f func()) {
 }
 
 func unFixed_param() {
-	print("1", 2, "3", 4)
+	print("1", 2, "3", 4, "asdf")
 }
 
 func print(a ...interface{}) {
