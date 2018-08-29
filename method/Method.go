@@ -11,17 +11,53 @@ func main() {
 	//unFixed_param()
 	//anonymous_method()
 	//closure_test()
-	//class_inherit_test()
+	defer_invoke()
 
+	//class_inherit_test()
+	//interface_test()
+}
+
+func defer_invoke() {
+	//fmt.Println("1")
+	//defer fmt.Println("defer todo")
+	//fmt.Println("2")
+	//defer fmt.Println("defer todo2")
+	//fmt.Println("4")
+	//fmt.Println("5")
+
+	x, y := 1, 2
+	defer func(a int) {
+		fmt.Println("defer x,y=", a, y) //y为闭包引用
+	}(x) //注册时，赋值调用参数
+
+	x += 100
+	y += 200
+	fmt.Println(x)
+	fmt.Println(y)
+}
+
+func interface_test() {
 	base := Base{}
-	t1 := &TypeOne{1,base}
-	t2 := &TypeTwo{2,base}
-	t3 := &TypeThree{3,base}
-	//https://blog.csdn.net/wangshubo1989/article/details/73287204
+	t1 := &TypeOne{1, base}
+	t2 := &TypeTwo{2, base}
+	t3 := &TypeThree{3, base}
+	//bases := []Baser{t1, t2, t3}
+	bases := []Baser{Baser(t1), Baser(t2), Baser(t3)}
+	for s, _ := range bases {
+		switch bases[s].(type) {
+		case *TypeOne:
+			fmt.Println("TypeOne")
+		case *TypeTwo:
+			fmt.Println("TypeTwo")
+		case *TypeThree:
+			fmt.Println("TypeThree")
+		}
+
+		fmt.Printf("The value is:  %f\n", bases[s].Get())
+	}
 }
 
 type Base struct {
-
 }
 
 type Baser interface {
@@ -83,7 +119,7 @@ func (h *Human) SayHi() {
 }
 
 //重写
-func (e *Employee) SayHi(){
+func (e *Employee) SayHi() {
 	fmt.Printf("Hi, I am %s, I work at %s. Call me on %s\n", e.name,
 		e.company, e.phone)
 }
@@ -91,6 +127,27 @@ func (e *Employee) SayHi(){
 func closure_test() {
 	f := closure(123)
 	f()
+
+	/**
+	闭包的延迟求值特性
+	 */
+	var s []func()
+	//for i := 0; i < 2; i++ {
+	//	s = append(s, func() {
+	//		fmt.Printf("%v\t%v\n", &i, i)
+	//	})
+	//}
+	//解决方案
+	for i := 0; i < 2; i++ {
+		x := i
+		s = append(s, func() {
+			fmt.Printf("%v\t%v\n", &x, x)
+		})
+	}
+
+	for _, f := range s {
+		f()
+	}
 }
 
 func closure(x int) func() {
