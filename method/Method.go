@@ -11,9 +11,8 @@ func main() {
 	//unFixed_param()
 	//anonymous_method()
 	//closure_test()
-	defer_invoke()
-
-	//class_inherit_test()
+	//defer_invoke()
+	class_inherit_test()
 	//interface_test()
 }
 
@@ -112,6 +111,10 @@ type Student struct {
 type Employee struct {
 	Human
 	company string
+}
+
+func (s *Student) SayHi() {
+	fmt.Printf("Hi, I am %s, I am a student in %s. you can call me on %s\n", s.name, s.school, s.phone)
 }
 
 func (h *Human) SayHi() {
