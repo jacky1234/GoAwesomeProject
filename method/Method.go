@@ -2,8 +2,13 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"runtime/debug"
 )
 
+
+//error
+//method
 func main() {
 	//method_point_1()
 	//method_point_2()
@@ -12,27 +17,97 @@ func main() {
 	//anonymous_method()
 	//closure_test()
 	//defer_invoke()
-	class_inherit_test()
+	//class_inherit_test()
 	//interface_test()
+	//error_define()
+	panic_recover_test()
+}
+
+func panic_recover_test() {
+	//panic 会立即中断当前函数流程，执行延迟调用。在延迟调用中，recover可以捕获panic提交的对象
+	//defer func() {
+	//	if err := recover(); err != nil {
+	//		log.Fatalln(err)
+	//	}
+	//}()
+	//panic("i am dead")
+	//println("exit 123.")
+
+	defer func() {
+		for {
+			if err := recover(); err != nil {
+				log.Println(err)
+				debug.PrintStack()
+			} else {
+				log.Fatalln("fatal	")
+			}
+		}
+	}()
+	defer func() {						//类似重新抛出异常
+		panic("you are dead")		//可先recover捕获，包装后重新抛出
+	}()
+	panic("I am dead")
+}
+
+func error_define() {
+	z, err := div(10, 0)
+	if err != nil {
+		switch e := err.(type) {
+		case DivError:
+			fmt.Println(e, e.x, e.y)
+		default:
+			fmt.Println(e)
+		}
+	}
+	println(z)
+}
+
+type DivError struct {
+	//自定义错误类型
+	x, y int
+}
+
+func (DivError) Error() string { //实现error接口方法
+	return "division by zero"
+}
+
+func div(x, y int) (int, error) {
+	if y == 0 {
+		return 0, DivError{x, y}
+	}
+
+	return x / y, nil
 }
 
 func defer_invoke() {
-	//fmt.Println("1")
-	//defer fmt.Println("defer todo")
-	//fmt.Println("2")
-	//defer fmt.Println("defer todo2")
-	//fmt.Println("4")
-	//fmt.Println("5")
+	fmt.Println("1")
+	defer fmt.Println("defer todo")
+	fmt.Println("2")
+	defer fmt.Println("defer todo2")
+	fmt.Println("4")
+	fmt.Println("5")
 
-	x, y := 1, 2
-	defer func(a int) {
-		fmt.Println("defer x,y=", a, y) //y为闭包引用
-	}(x) //注册时，复制调用参数
+	//x, y := 1, 2
+	//defer func(a int) {
+	//	fmt.Println("defer x,y=", a, y) //y为闭包引用
+	//}(x) //注册时，复制调用参数
+	//
+	//x += 100
+	//y += 200
+	//fmt.Println(x)
+	//fmt.Println(y)
 
-	x += 100
-	y += 200
-	fmt.Println(x)
-	fmt.Println(y)
+	//do := func(n int) {
+	//	fmt.Printf("open file %d", n)
+	//	fmt.Printf("\tdo something on %d", n)
+	//
+	//	defer fmt.Printf("\tclose file %d\n", n) //匿名函数结束时调用，而非main
+	//}
+	//
+	//for i := 0; i < 100; i++ {
+	//	do(i)
+	//}
+	//fmt.Println("end")
 }
 
 func interface_test() {
