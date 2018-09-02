@@ -12,7 +12,7 @@ func main() {
 	//string_other()
 	//string_apple_tobytes()
 
-	
+
 }
 
 func string_apple_tobytes() {
