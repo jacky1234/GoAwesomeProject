@@ -32,6 +32,8 @@ func (u user) Print() {
 
 func forSliceRange(s []int) { //切片做函数参数
 	s[0] = -1
+	fmt.Println(&s[0])
+	fmt.Println(&s[1])
 	for i, v := range s {
 		fmt.Printf("s[%d]=%d, ", i, v)
 		//s[0]=-1, s[1]=1, s[2]=2, s[3]=3, s[4]=4, s[5]=5, s[6]=6, s[7]=7, s[8]=8, s[9]=9,
@@ -42,7 +44,7 @@ func forSliceRange(s []int) { //切片做函数参数
 func main() {
 	//slice_test()
 	//slice_copy()
-	//slice_method()
+	slice_method()
 
 	//method_test()
 	//method2_test()
@@ -67,8 +69,6 @@ func main() {
 	//
 	//println(a)
 
-	var a *int = test()
-	println(a, *a)
 }
 
 func slice_copy() {
@@ -81,13 +81,10 @@ func slice_copy() {
 	// dst:s2, src:s1
 	fmt.Println(s1)
 	fmt.Println(s2)
-	//for i, n := range data {
-	//	fmt.Printf("key = %d,value = %d\n", i, n)
-	//}
-	fmt.Println(s2)
-	//[8 9 2 3 4]
 	fmt.Println(data)
-	//[8 9 2 3 4 5 6 7 8 9]
+	for i, n := range data {
+		fmt.Printf("key = %d,value = %d\n", i, n)
+	}
 }
 
 func slice_method() {
@@ -121,8 +118,7 @@ func delay_toConfirm1() {
 	fmt.Printf("0b%d", a)
 }
 
-func
-enum_iota_test3() {
+func enum_iota_test3() {
 	println(Sunday)
 	println(Monday)
 	println(Tuesday)

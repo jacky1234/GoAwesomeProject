@@ -11,7 +11,7 @@ import (
 //method
 func main() {
 	//method_point_1()
-	//method_point_2()
+	method_point_2()
 	//add_method_for_object()
 	//unFixed_param()
 	//anonymous_method()
@@ -20,7 +20,7 @@ func main() {
 	//class_inherit_test()
 	//interface_test()
 	//error_define()
-	panic_recover_test()
+	//panic_recover_test()
 }
 
 func panic_recover_test() {
@@ -323,6 +323,8 @@ func test_param(x *int) {
 
 func method_point_1() {
 	var a *int = test()
+	println(a, *a)
+	*a = 200
 	println(a, *a)
 }
 
