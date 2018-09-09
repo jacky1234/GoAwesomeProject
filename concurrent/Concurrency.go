@@ -11,16 +11,17 @@ import (
 func main() {
 	//goTest1()
 
-	exit:=make(chan struct{})			//创建通道。近通知，数据并没有实际的意义
+	exit := make(chan struct{}) //创建通道。仅通知，数据并没有实际的意义
 
 	go func() {
 		time.Sleep(time.Second)
 		println("goroutine done.")
 
-		close(exit)		//关闭通道，发出信号
+		close(exit) //关闭通道，发出信号
 	}()
 
 	println("main ...")
+	<-exit			//如通道关闭，立即解除阻塞
 	println("main exit.")
 }
 
