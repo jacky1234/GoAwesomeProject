@@ -17,6 +17,8 @@ func interface_switch() {
 	var x interface{} = func(x int) string {
 		return fmt.Sprintf("d: %d", x)
 	}
+	//y := 199
+	//x = &y
 	switch v := x.(type) {
 	case nil:
 		println("nil")
